@@ -3,7 +3,7 @@ import { Route, Routes, useNavigate } from "react-router-dom";
 import Layout from "./components/Layout";
 import {
   check,
-  DispathContext,
+  DispatchContext,
   remove,
   UserContext,
 } from "./context/UserProvider";
@@ -13,9 +13,8 @@ import Regist from "./views/Regist";
 
 function App() {
   const user = useContext(UserContext);
-  const dispatch = useContext(DispathContext);
+  const dispatch = useContext(DispatchContext);
   const navigate = useNavigate();
-  const isSigned = () => user !== null && user;
 
   useEffect(() => {
     dispatch(check());
@@ -28,8 +27,9 @@ function App() {
       </Layout.Header>
       <Layout.Routes>
         <Layout.Route to='/'>home</Layout.Route>
-        {!isSigned() && <Layout.Route to='/regist'>regist</Layout.Route>}
-        {isSigned() && (
+        {user !== "" && <Layout.Route to='/chat'>chat</Layout.Route>}
+        {user === "" && <Layout.Route to='/regist'>regist</Layout.Route>}
+        {user !== "" && (
           <button
             onClick={(e) => {
               dispatch(remove());
@@ -38,12 +38,17 @@ function App() {
             유저 삭제
           </button>
         )}
-        <Layout.Route to='/chat'>chat</Layout.Route>
       </Layout.Routes>
       <Routes>
         <Route path='/' element={<Home />} />
-        <Route path='/regist' element={<Regist user={user} />} />
-        <Route path='/chat' element={<Chat user={user} />} />
+        <Route
+          path='/regist'
+          element={<Regist user={user} dispatch={dispatch} />}
+        />
+        <Route
+          path='/chat'
+          element={<Chat user={user} dispatch={dispatch} />}
+        />
       </Routes>
     </Layout>
   );

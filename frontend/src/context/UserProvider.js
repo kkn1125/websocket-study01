@@ -13,25 +13,30 @@ export const remove = () => ({ type: REMOVE });
 const user = (state, action) => {
   switch (action.type) {
     case ADD:
-      return state;
+      localStorage["user"] = action.user;
+      return action.user;
     case CHECK:
-      return localStorage["user"] || state;
+      if (localStorage["user"] === undefined) {
+        localStorage["user"] = "";
+      }
+      return localStorage["user"];
     case REMOVE:
-      return state;
+      localStorage.removeItem("user");
+      return null;
     default:
       return state;
   }
 };
 
-export const DispathContext = createContext(() => {});
+export const DispatchContext = createContext(() => {});
 export const UserContext = createContext(null);
 
 function UserProvider({ children }) {
   const [state, dispatch] = useReducer(user, initialState);
   return (
-    <DispathContext.Provider value={dispatch}>
+    <DispatchContext.Provider value={dispatch}>
       <UserContext.Provider value={state}>{children}</UserContext.Provider>
-    </DispathContext.Provider>
+    </DispatchContext.Provider>
   );
 }
 

@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Layout from "../components/Layout";
+import { add, DispatchContext } from "../context/UserProvider";
 
-function Regist({ user }) {
+function Regist({ user, dispatch }) {
   const [input, setInput] = useState("");
   const navigate = useNavigate();
 
@@ -14,7 +16,7 @@ function Regist({ user }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    localStorage["user"] = input;
+    dispatch(add(input));
     setInput("");
     alert(`${input}이름으로 작성되었습니다. 이제 채팅이 가능합니다.`);
     navigate("/");
@@ -22,7 +24,7 @@ function Regist({ user }) {
   };
 
   return (
-    <div>
+    <Layout.Body>
       <form onSubmit={handleSubmit}>
         <input
           type='text'
@@ -30,7 +32,7 @@ function Regist({ user }) {
           value={input}
         />
       </form>
-    </div>
+    </Layout.Body>
   );
 }
 

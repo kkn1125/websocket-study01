@@ -18,15 +18,20 @@ app.get("/", (req, res) => {
 
 io.on("connection", (socket) => {
   console.log("a user connected");
-  messageHistory.push({
-    who: "server",
-    msg: "Hello",
-  });
+  // messageHistory.push({
+  //   who: "server",
+  //   msg: "Hello",
+  // });
   io.emit("chat message", messageHistory);
   socket.on("chat message", (socket) => {
-    messageHistory.push(socket);
     console.log(`${socket.who} 측 메세지 : ${socket.msg}`);
+  });
+  socket.on("chat message", (socket) => {
+    messageHistory.push(socket);
     io.emit("chat message", messageHistory);
+  });
+  socket.on("is writing", (socket) => {
+    io.emit("is writing", socket);
   });
 
   socket.on("disconnect", () => {
