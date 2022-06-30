@@ -1,18 +1,17 @@
-/** @jsxImportSource @emotion/react */
-import { css } from "@emotion/css";
+import { ClassNames, css } from "@emotion/react";
 import React from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
 function Layout({ children }) {
   return (
     <div
-      className={css`
+      css={css`
         display: flex;
         flex-direction: column;
-        height: 100%;
         width: 35%;
         margin-left: auto;
         margin-right: auto;
+        margin-top: 1rem;
       `}>
       {children}
     </div>
@@ -22,11 +21,12 @@ function Layout({ children }) {
 Layout.Header = function LayoutHeader({ children }) {
   return (
     <div
-      className={css`
+      css={css`
         border-bottom-width: 1px;
         border-bottom-color: #454545;
         border-bottom-style: solid;
-        margin-bottom: 1rem;
+        padding-bottom: 0.5rem;
+        margin-bottom: 0.5rem;
       `}>
       {children}
     </div>
@@ -36,7 +36,7 @@ Layout.Header = function LayoutHeader({ children }) {
 Layout.Body = function LayoutBody({ children }) {
   return (
     <div
-      className={css`
+      css={css`
         flex: 1;
       `}>
       {children}
@@ -47,7 +47,7 @@ Layout.Body = function LayoutBody({ children }) {
 Layout.Routes = function LayoutRoutes({ children }) {
   return (
     <div
-      className={css`
+      css={css`
         display: flex;
         gap: 15px;
         & a {
@@ -62,14 +62,27 @@ Layout.Routes = function LayoutRoutes({ children }) {
 Layout.Route = function LayoutRoute({ to, children }) {
   const locate = useLocation();
   return (
-    <Link
-      to={to}
-      className={css`
-        color: ${locate.pathname === to ? "#651595" : "#959595"};
-        text-transform: uppercase;
-      `}>
-      {children}
-    </Link>
+    <ClassNames>
+      {({ css, cx }) => (
+        <Link
+          to={to}
+          className={cx(
+            css`
+              color: ${locate.pathname === to ? "#651595" : "#959595"};
+              text-transform: uppercase;
+            `,
+            css`
+              border: 1px solid #22aaaa;
+              border-radius: 5px;
+              background-color: #22aaaaa5;
+              color: white;
+              padding: 0.3rem 0.5rem;
+            `
+          )}>
+          {children}
+        </Link>
+      )}
+    </ClassNames>
   );
 };
 

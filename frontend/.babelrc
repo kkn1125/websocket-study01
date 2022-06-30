@@ -1,11 +1,17 @@
 {
   "plugins": [
     [
+      "@emotion/babel-plugin-jsx-pragmatic",
+      {
+        "export": "jsx",
+        "import": "__to_avoid_prepending_/** @jsxImportSource @emotion/react */",
+        "module": "@emotion/react"
+      }
+    ],
+    [
       "@babel/plugin-transform-react-jsx",
       {
-        "throwIfNamespace": false, // defaults to true
-        "runtime": "automatic", // defaults to classic
-        "importSource": "theme-ui" // defaults to react
+        "pragma": "__to_avoid_prepending_/** @jsxImportSource @emotion/react */"
       }
     ]
   ]

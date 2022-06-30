@@ -33,6 +33,13 @@ io.on("connection", (socket) => {
   socket.on("is writing", (socket) => {
     io.emit("is writing", socket);
   });
+  socket.on("out", (socket) => {
+    messageHistory.push({
+      who: 'server',
+      msg: socket+'님이 방을 나갔습니다.',
+    });
+    io.emit("out", messageHistory);
+  });
 
   socket.on("disconnect", () => {
     console.log("사용자가 떠났습니다.");
