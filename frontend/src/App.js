@@ -25,27 +25,27 @@ function App() {
     <Layout>
       <Layout.Header>
         <h1>Socket IO</h1>
-      <Layout.Routes>
-        <Layout.Route to='/'>home</Layout.Route>
-        {user !== "" && <Layout.Route to='/chat'>chat</Layout.Route>}
-        {user === "" && <Layout.Route to='/regist'>regist</Layout.Route>}
-        {user !== "" && (
-          <button
-            onClick={(e) => {
-              dispatch(remove());
-              navigate("/");
-            }}
-            css={css`
-              border: 1px solid #aa8888;
-              border-radius: 5px;
-              background-color: #aa222255;
-              color: white;
-              padding: .3rem .5rem;
-            `}>
-            유저 삭제
-          </button>
-        )}
-      </Layout.Routes>
+        <Layout.Routes>
+          <Layout.Route to='/'>home</Layout.Route>
+          {user !== "" && <Layout.Route to='/chat'>chat</Layout.Route>}
+          {user === "" && <Layout.Route to='/regist'>regist</Layout.Route>}
+          {user !== "" && (
+            <button
+              onClick={(e) => {
+                dispatch(remove());
+                navigate("/");
+              }}
+              css={css`
+                border: 1px solid #aa8888;
+                border-radius: 5px;
+                background-color: #aa222255;
+                color: white;
+                padding: 0.3rem 0.5rem;
+              `}>
+              유저 삭제
+            </button>
+          )}
+        </Layout.Routes>
       </Layout.Header>
       <Routes>
         <Route path='/' element={<Home />} />

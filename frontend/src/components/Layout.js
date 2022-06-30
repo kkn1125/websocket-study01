@@ -8,7 +8,9 @@ function Layout({ children }) {
       css={css`
         display: flex;
         flex-direction: column;
+        min-width: 300px;
         width: 35%;
+        max-width: 500px;
         margin-left: auto;
         margin-right: auto;
         margin-top: 1rem;
